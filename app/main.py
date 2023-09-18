@@ -7,9 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 # models.Base.metadata.create_all(bind=engine) -> Creates db tables. No needed if using alembic.
 app = FastAPI()
 origins = [
-    "https://www.google.com",
-    "http://localhost:8080",
-    "http://localhost:8000",
+    "*",
 ]
 app.add_middleware(
     CORSMiddleware,
@@ -26,5 +24,5 @@ app.include_router(votes.router)
 
 
 @app.get("/")
-def root():
-    return {"David": "MEEEEEEEEEEEEEEEEEE"}
+async def root():
+    return {"Message": "This is my API"}
