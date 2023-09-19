@@ -10,17 +10,6 @@ from ..database import get_db
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
 
-@router.post("/", response_model=schemas.CreatedPost, status_code=status.HTTP_201_CREATED)
-async def create_post(post_payload: schemas.PayloadPost, db: Session = Depends(get_db),
-                      user: User = Depends(oauth2.get_current_user)):
-    db_post = models.Post(**post_payload.model_dump())
-    db_post.user_id = user.id
-    db.add(db_post)
-    db.commit()
-    db.refresh(db_post)
-    return db_post
-
-
 @router.get("/", response_model=List[schemas.PostVote], status_code=status.HTTP_202_ACCEPTED)
 def get_posts(db: Session = Depends(get_db), user: User = Depends(oauth2.get_current_user), limit: int = 10,
               skip: int = 0, search: Optional[str] = ""):
@@ -34,6 +23,17 @@ def get_posts(db: Session = Depends(get_db), user: User = Depends(oauth2.get_cur
     if not db_posts:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="No posts found")
     return db_posts
+
+
+@router.post("/", response_model=schemas.CreatedPost, status_code=status.HTTP_201_CREATED)
+async def create_post(post_payload: schemas.PayloadPost, db: Session = Depends(get_db),
+                      user: User = Depends(oauth2.get_current_user)):
+    db_post = models.Post(**post_payload.model_dump())
+    db_post.user_id = user.id
+    db.add(db_post)
+    db.commit()
+    db.refresh(db_post)
+    return db_post
 
 
 @router.get("/{id_payload}", response_model=schemas.PostVote, status_code=status.HTTP_202_ACCEPTED)
