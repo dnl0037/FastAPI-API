@@ -25,4 +25,4 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def root():
-    return {"Message": "This is my API"}
+    return {"Ese David, mi causa, ¡bota tu me!": "MEEEEEEEEEE"}
