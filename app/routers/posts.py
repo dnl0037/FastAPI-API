@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import status, HTTPException, Depends, APIRouter
 from sqlalchemy import func
@@ -21,7 +21,7 @@ async def create_post(post_payload: schemas.PayloadPost, db: Session = Depends(g
     return db_post
 
 
-@router.get("/", response_model=list[schemas.PostVote], status_code=status.HTTP_202_ACCEPTED)
+@router.get("/", response_model=List[schemas.PostVote], status_code=status.HTTP_202_ACCEPTED)
 def get_posts(db: Session = Depends(get_db), user: User = Depends(oauth2.get_current_user), limit: int = 10,
               skip: int = 0, search: Optional[str] = ""):
     db_posts = (db.query(models.Post, func.count(models.Votes.post_id).label("votes"))
