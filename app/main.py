@@ -25,4 +25,4 @@ app.include_router(votes.router)
 
 @app.get("/")
 async def root():
-    return {"Ese David, mi causa, ¡bota tu me!": "MEEEEEEEEEE"}
+    return {"Ese David, mi causa, ¡botame tu me!": "MEEEEEEEEEE"}

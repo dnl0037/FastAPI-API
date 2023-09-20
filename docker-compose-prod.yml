@@ -1,0 +1,34 @@
+version: "3"
+services:
+  api:
+    image: dnl0037/fastapiapi:api
+    depends_on:
+      - postgres
+    ports:
+      - "80:8000"
+    command:
+      - bash
+      - -c
+      - |
+        alembic upgrade head
+        uvicorn app.main:app --host 0.0.0.0 --port 8000 
+
+    environment:
+      - DB_HOSTNAME=${}
+      - DB_USERNAME=${}
+      - DB_PORT=${}
+      - DB_PASSWORD=${}
+      - DB_NAME=${}
+      - SECRET_KEY=${}
+      - ALGORITHM=${}
+      - TOKEN_EXPIRATION_TIME=${}
+
+  postgres:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=${}
+      - POSTGRES_DB=${}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+volumes:
+  postgres-db:
