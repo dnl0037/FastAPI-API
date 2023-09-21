@@ -6,5 +6,11 @@ jobs:
     steps:
       - name: pulling git repo
         uses: actions/checkout@v4
-      - name: botar me
-        run: echo "meeeeee"
+      - name: Install python 3.9
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: upgrade pip
+        run: python -m pip install --upgrade pip
+      - name: install dependencies
+        run: pip install -r requirements.txt
