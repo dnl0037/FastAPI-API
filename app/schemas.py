@@ -38,16 +38,10 @@ class CreatedUser(BaseModel):
     email: str
     created_at: datetime
 
-    class Config:
-        from_attributes = True
-
 
 class PostUser(BaseModel):
     id: int
     email: str
-
-    class Config:
-        from_attributes = True
 
 
 class CreatedPost(PayloadPost):
@@ -56,11 +50,8 @@ class CreatedPost(PayloadPost):
     user_id: int
     user: PostUser
 
-    class Config:
-        from_attributes = True
 
-
-class PostVote(BaseModel):
+class PostComplete(BaseModel):
     Post: CreatedPost
     votes: int
 

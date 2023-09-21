@@ -1,6 +1,6 @@
 from typing import Optional, List
 
-from fastapi import status, HTTPException, Depends, APIRouter
+from fastapi import status, HTTPException, Depends, APIRouter, Request
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from ..models import User
@@ -10,7 +10,7 @@ from ..database import get_db
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
 
-@router.get("/", response_model=List[schemas.PostVote], status_code=status.HTTP_202_ACCEPTED)
+@router.get("/", response_model=List[schemas.PostComplete], status_code=status.HTTP_202_ACCEPTED)
 def get_posts(db: Session = Depends(get_db), user: User = Depends(oauth2.get_current_user), limit: int = 10,
               skip: int = 0, search: Optional[str] = ""):
     db_posts = (db.query(models.Post, func.count(models.Votes.post_id).label("votes"))
@@ -26,8 +26,9 @@ def get_posts(db: Session = Depends(get_db), user: User = Depends(oauth2.get_cur
 
 
 @router.post("/", response_model=schemas.CreatedPost, status_code=status.HTTP_201_CREATED)
-async def create_post(post_payload: schemas.PayloadPost, db: Session = Depends(get_db),
+async def create_post(request: Request, post_payload: schemas.PayloadPost, db: Session = Depends(get_db),
                       user: User = Depends(oauth2.get_current_user)):
+    # print(request.headers)
     db_post = models.Post(**post_payload.model_dump())
     db_post.user_id = user.id
     db.add(db_post)
@@ -36,7 +37,7 @@ async def create_post(post_payload: schemas.PayloadPost, db: Session = Depends(g
     return db_post
 
 
-@router.get("/{id_payload}", response_model=schemas.PostVote, status_code=status.HTTP_202_ACCEPTED)
+@router.get("/{id_payload}", response_model=schemas.PostComplete, status_code=status.HTTP_202_ACCEPTED)
 async def get_post(id_payload: int, db: Session = Depends(get_db), user: User = Depends(oauth2.get_current_user)):
     # db_post = db.query(models.Post).filter(models.Post.id == id_payload).first()
     db_post = (db.query(models.Post, func.count(models.Votes.post_id).label("votes"))

@@ -5,6 +5,7 @@ from .config import Settings as St
 
 SQLALCHEMY_DATABASE_URL = f"postgresql://{St.db_username}:{St.db_password}@{St.db_hostname}:{St.db_port}/{St.db_name}"
 engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
