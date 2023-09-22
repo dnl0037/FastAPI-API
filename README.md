@@ -2,6 +2,7 @@
 
 A FastAPI-based API for a social media platform with features like user authentication, post creation, and voting on posts. It utilizes PostgreSQL for data storage, Alembic for database migrations, and includes unit tests with pytest. The application can be deployed on Heroku, Docker, and an Ubuntu server, with continuous integration and continuous deployment (CI/CD) pipelines.
 
+
 ## Table of Contents
 
 - [Requirements](#requirements)
@@ -55,6 +56,7 @@ Make sure you have the following requirements installed:
     ```bash
     uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 12. The application will be available at `http://localhost:8000`.
+
 
 
 ## Usage with Postman
@@ -136,6 +138,7 @@ Make sure you have the following requirements installed:
 - Check out the rest of the [endpoints](#api-endpoints)
 
 
+
 ## Project Structure
 
 The most important folders in this project are:
@@ -159,6 +162,7 @@ The most important folders in this project are:
 - `tests`: This folder contains unit tests for the application.
 
   - Inside this folder, you will find various test files that cover different aspects of the application's functionality.
+
 
 
 ## API Endpoints
@@ -231,6 +235,7 @@ The most important folders in this project are:
 These data models define the core structure of the application, allowing users to create posts, vote on posts, and maintain user accounts.
 
 
+
 ## Testing
 
 To run unit tests using pytest:
@@ -246,6 +251,8 @@ To run unit tests using pytest:
 
    ```bash
    pytest
+   ```
+
 
 ## Deployment
 
@@ -262,7 +269,8 @@ To run unit tests using pytest:
 - This repository contains 3 files: `Dockerfile`, `docker-compose-dev.yml` and `docker-compose-prod.yml` with the necessary instructions to create your image and run your container.
 
 
-## CI/CD Pipeline
+
+## CI/CD pipeline
 
 
 This configuration `.github/workflows/build-deploy.yml` file defines a Continuous Integration/Continuous Deployment (CI/CD) pipeline that automates the build, test, and deployment of the application. It ensures your project runs smoothly in different environments and updates automatically when changes are made to your repository.
@@ -324,6 +332,7 @@ This job runs on an Ubuntu-based environment and deploys the application. It dep
    - **Deploy to Ubuntu Server:** The application is deployed to an Ubuntu server using the `appleboy/ssh-action`. SSH credentials and deployment script are provided from secrets.
 
 This CI/CD pipeline ensures that your application is built, tested, and deployed automatically, reducing manual intervention and ensuring a streamlined development process.
+
 
 
 ## Contribution
