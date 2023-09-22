@@ -12,7 +12,7 @@ A FastAPI-based API for a social media platform with features like user authenti
 - [Data Models](#data-models)
 - [Testing](#testing)
 - [Deployment](#deployment)
-- [CI/CD Pipeline](#CI/CD-pipeline)
+- [CI/CD Pipeline](#ci/cd-pipeline)
 - [Contribution](#contribution)
 
 
